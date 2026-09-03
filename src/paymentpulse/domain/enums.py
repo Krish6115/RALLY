@@ -54,6 +54,7 @@ class RecoveryState(str, enum.Enum):
     FAILED = "failed"
     RECOVERY_PENDING = "recovery_pending"
     RECOVERY_EXECUTING = "recovery_executing"
+    UNKNOWN = "unknown"
     RECOVERED = "recovered"
     EXHAUSTED = "exhausted"
     TERMINATED = "terminated"
@@ -61,6 +62,7 @@ class RecoveryState(str, enum.Enum):
 class ExecutionOutcome(str, enum.Enum):
     PENDING = "pending"
     DISPATCHED = "dispatched"
+    UNKNOWN = "unknown"
     SUCCEEDED = "succeeded"
     FAILED = "failed"
     ABORTED = "aborted"
