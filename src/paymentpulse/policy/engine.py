@@ -1,4 +1,3 @@
-# Policy Engine - Initial deterministic decision baseline
 """
 The Orchestration Pipeline for PaymentPulse Decisioning.
 
