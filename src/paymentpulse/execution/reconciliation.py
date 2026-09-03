@@ -1,4 +1,3 @@
-# Live State Reconciliation
 """
 Reconciliation Service for UNKNOWN Outcomes.
 
