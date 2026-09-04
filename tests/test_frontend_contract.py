@@ -2,8 +2,8 @@ import pytest
 import json
 from datetime import datetime, timezone
 
-from paymentpulse.domain.decisions import PolicyDecision
-from paymentpulse.domain.enums import RecoveryAction, DecisionReason
+from rally.domain.decisions import PolicyDecision
+from rally.domain.enums import RecoveryAction, DecisionReason
 
 def test_frontend_serialization():
     """

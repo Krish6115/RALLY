@@ -2,20 +2,20 @@ import pytest
 import time
 from typing import Callable, Any
 
-from paymentpulse.domain.entities import (
+from rally.domain.entities import (
     Customer, Order, Payment, PaymentFailure, MerchantPolicy, 
     PaymentMethod, ErrorSource, RecoveryAction
 )
-from paymentpulse.domain.enums import PaymentStatus, RecoveryState, ExecutionOutcome
-from paymentpulse.domain.decisions import PolicyDecision, ModelPrediction, EconomicValue
-from paymentpulse.policy.constraints import PolicyConstraints
-from paymentpulse.policy.engine import DecisionPipeline
-from paymentpulse.safety.state_machine import PaymentStateMachine, RecoveryLifecycleState
-from paymentpulse.safety.idempotency import IdempotencyStore
-from paymentpulse.safety.recovery_coordinator import RecoveryCoordinator
-from paymentpulse.execution.adapter import MockRazorpayAdapter
-from paymentpulse.observability.metrics import MetricsClient
-from paymentpulse.execution.reconciliation import ReconciliationService
+from rally.domain.enums import PaymentStatus, RecoveryState, ExecutionOutcome
+from rally.domain.decisions import PolicyDecision, ModelPrediction, EconomicValue
+from rally.policy.constraints import PolicyConstraints
+from rally.policy.engine import DecisionPipeline
+from rally.safety.state_machine import PaymentStateMachine, RecoveryLifecycleState
+from rally.safety.idempotency import IdempotencyStore
+from rally.safety.recovery_coordinator import RecoveryCoordinator
+from rally.execution.adapter import MockRazorpayAdapter
+from rally.observability.metrics import MetricsClient
+from rally.execution.reconciliation import ReconciliationService
 
 # ---------------------------------------------------------
 # Mocks

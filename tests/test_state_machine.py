@@ -1,5 +1,5 @@
 import pytest
-from paymentpulse.safety.state_machine import (
+from rally.safety.state_machine import (
     PaymentStateMachine,
     PaymentLifecycleState,
     RecoveryLifecycleState,

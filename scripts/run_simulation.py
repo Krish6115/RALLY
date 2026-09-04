@@ -20,15 +20,15 @@ from pathlib import Path
 
 import numpy as np
 
-from paymentpulse.config import config
-from paymentpulse.simulator import generate_batch
-from paymentpulse.domain.enums import RecoveryAction
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import SLearnerUpliftModel, TLearnerUpliftModel, OraclePolicyModel
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.models.baselines import TimingOnlyBanditPolicy, PaymentPulsePolicy, OraclePolicy
-from paymentpulse.evaluation.runner import EvaluationRunner
-from paymentpulse.evaluation.sanity_checks import SanityChecker
+from rally.config import config
+from rally.simulator import generate_batch
+from rally.domain.enums import RecoveryAction
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import SLearnerUpliftModel, TLearnerUpliftModel, OraclePolicyModel
+from rally.models.action_ranker import ActionRanker
+from rally.models.baselines import TimingOnlyBanditPolicy, PaymentPulsePolicy, OraclePolicy
+from rally.evaluation.runner import EvaluationRunner
+from rally.evaluation.sanity_checks import SanityChecker
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)

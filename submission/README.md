@@ -84,11 +84,11 @@ py scripts/run_all_checks.py
 ```
 
 ## 11. Repository Structure
-- `src/paymentpulse/api/` - FastAPI bindings for the frontend.
-- `src/paymentpulse/safety/` - The deterministic state machine and Recovery Coordinator.
-- `src/paymentpulse/policy/` - The pipeline orchestrator and constraints.
-- `src/paymentpulse/models/` - T-Learner implementation and Economic Scoring.
-- `src/paymentpulse/simulator/` - Data generation and latent potential outcomes.
+- `src/rally/api/` - FastAPI bindings for the frontend.
+- `src/rally/safety/` - The deterministic state machine and Recovery Coordinator.
+- `src/rally/policy/` - The pipeline orchestrator and constraints.
+- `src/rally/models/` - T-Learner implementation and Economic Scoring.
+- `src/rally/simulator/` - Data generation and latent potential outcomes.
 - `frontend/` - The React/Vite UI control plane.
 - `scripts/` - Utilities for causal evaluation and red-teaming.
 - `tests/` - Comprehensive regression suite ensuring boundary integrity.

@@ -23,18 +23,18 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 
-from paymentpulse.config import config
-from paymentpulse.simulator import generate_batch
-from paymentpulse.domain.enums import RecoveryAction
-from paymentpulse.simulator.error_taxonomy import get_error_by_code
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.models.baselines import (
+from rally.config import config
+from rally.simulator import generate_batch
+from rally.domain.enums import RecoveryAction
+from rally.simulator.error_taxonomy import get_error_by_code
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel
+from rally.models.action_ranker import ActionRanker
+from rally.models.baselines import (
     NoRecoveryPolicy, AlwaysRetryPolicy, RuleBasedPolicy,
     TimingOnlyBanditPolicy, PaymentPulsePolicy,
 )
-from paymentpulse.evaluation.off_policy import DoublyRobustEstimator, compute_doubly_robust_scores
+from rally.evaluation.off_policy import DoublyRobustEstimator, compute_doubly_robust_scores
 
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)
@@ -179,7 +179,7 @@ def main():
     X_test = dr_estimator.context_builder.transform(df_test)
 
     policies = {
-        "paymentpulse": pp_actions,
+        "rally": pp_actions,
         "rule_based": rb_actions,
     }
 
@@ -267,7 +267,7 @@ def main():
         "always_retry": ar_actions,
         "rule_based": rb_actions,
         "timing_only_bandit": tb_actions,
-        "paymentpulse": pp_actions,
+        "rally": pp_actions,
     }
 
     # Compute ground-truth oracle ENRV

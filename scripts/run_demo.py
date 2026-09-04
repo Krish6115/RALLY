@@ -15,14 +15,14 @@ import logging
 import time
 from datetime import datetime
 
-from paymentpulse.config import config
-from paymentpulse.simulator import generate_batch
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel
-from paymentpulse.policy.engine import DecisionPipeline
-from paymentpulse.policy.constraints import PolicyConstraints
-from paymentpulse.domain.decisions import ModelPrediction, EconomicValue
-from paymentpulse.domain.enums import RecoveryAction
+from rally.config import config
+from rally.simulator import generate_batch
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel
+from rally.policy.engine import DecisionPipeline
+from rally.policy.constraints import PolicyConstraints
+from rally.domain.decisions import ModelPrediction, EconomicValue
+from rally.domain.enums import RecoveryAction
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)

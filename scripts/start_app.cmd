@@ -3,7 +3,7 @@ setlocal
 cd /d "%~dp0.."
 
 echo Starting Rally Demo Server...
-start "Rally Backend" cmd /k "py src\paymentpulse\api\server.py"
+start "Rally Backend" cmd /k "py src\rally\api\server.py"
 
 echo Starting Vite Frontend...
 cd /d "%~dp0..\frontend"

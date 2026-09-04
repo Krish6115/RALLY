@@ -15,14 +15,14 @@ import pandas as pd
 import numpy as np
 from tabulate import tabulate
 
-from paymentpulse.simulator import generate_batch
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.models.baselines import PaymentPulsePolicy, RuleBasedPolicy
-from paymentpulse.evaluation.off_policy import DoublyRobustEstimator
-from paymentpulse.evaluation.metrics import Evaluator
-from paymentpulse.domain.enums import RecoveryAction
+from rally.simulator import generate_batch
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel
+from rally.models.action_ranker import ActionRanker
+from rally.models.baselines import PaymentPulsePolicy, RuleBasedPolicy
+from rally.evaluation.off_policy import DoublyRobustEstimator
+from rally.evaluation.metrics import Evaluator
+from rally.domain.enums import RecoveryAction
 
 logging.basicConfig(level=logging.INFO, format="%(levelname)s: %(message)s")
 logger = logging.getLogger(__name__)

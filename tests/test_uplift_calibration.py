@@ -14,10 +14,10 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from paymentpulse.simulator import generate_batch
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel, SLearnerUpliftModel
-from paymentpulse.domain.enums import RecoveryAction
+from rally.simulator import generate_batch
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel, SLearnerUpliftModel
+from rally.domain.enums import RecoveryAction
 
 
 @pytest.fixture(scope="module")
@@ -144,7 +144,7 @@ def test_escalation_cost_exceeds_typical_uplift():
 
     The ranker should NOT select escalation for transactions below this breakeven.
     """
-    from paymentpulse.models.action_ranker import ActionRanker
+    from rally.models.action_ranker import ActionRanker
 
     ranker = ActionRanker(contribution_margin=1.0, min_confidence_threshold=0.0)
 

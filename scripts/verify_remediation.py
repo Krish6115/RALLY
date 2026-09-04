@@ -14,16 +14,16 @@ from collections import Counter
 import numpy as np
 import pandas as pd
 
-from paymentpulse.simulator import generate_batch
-from paymentpulse.domain.enums import RecoveryAction
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel, SLearnerUpliftModel
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.models.baselines import (
+from rally.simulator import generate_batch
+from rally.domain.enums import RecoveryAction
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel, SLearnerUpliftModel
+from rally.models.action_ranker import ActionRanker
+from rally.models.baselines import (
     NoRecoveryPolicy, AlwaysRetryPolicy, RuleBasedPolicy,
     TimingOnlyBanditPolicy, PaymentPulsePolicy,
 )
-from paymentpulse.evaluation.off_policy import DoublyRobustEstimator
+from rally.evaluation.off_policy import DoublyRobustEstimator
 
 logging.basicConfig(level=logging.WARNING, format="%(levelname)s: %(message)s")
 

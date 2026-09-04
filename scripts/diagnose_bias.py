@@ -18,13 +18,13 @@ import numpy as np
 import pandas as pd
 from collections import Counter
 
-from paymentpulse.simulator import generate_batch
-from paymentpulse.domain.enums import RecoveryAction
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import SLearnerUpliftModel
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.models.baselines import PaymentPulsePolicy, RuleBasedPolicy
-from paymentpulse.simulator.error_taxonomy import get_error_by_code
+from rally.simulator import generate_batch
+from rally.domain.enums import RecoveryAction
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import SLearnerUpliftModel
+from rally.models.action_ranker import ActionRanker
+from rally.models.baselines import PaymentPulsePolicy, RuleBasedPolicy
+from rally.simulator.error_taxonomy import get_error_by_code
 
 cost_map = {
     "do_nothing": 0.0, "retry_now": 0.10, "wait_2min": 0.0,

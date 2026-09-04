@@ -9,9 +9,9 @@ Verifies:
 
 import pandas as pd
 import numpy as np
-from paymentpulse.models.baselines import TimingOnlyBanditPolicy
-from paymentpulse.domain.enums import RecoveryAction
-from paymentpulse.features.context_builder import ContextBuilder
+from rally.models.baselines import TimingOnlyBanditPolicy
+from rally.domain.enums import RecoveryAction
+from rally.features.context_builder import ContextBuilder
 
 
 def test_timing_bandit_distinguishes_immediate_vs_delayed_retry():

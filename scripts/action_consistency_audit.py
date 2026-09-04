@@ -6,12 +6,12 @@ Diagnostic Audit: Oracle vs Deployable Action Consistency
 import argparse
 import pandas as pd
 import numpy as np
-from paymentpulse.simulator import generate_batch
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel, OraclePolicyModel
-from paymentpulse.models.baselines import RuleBasedPolicy, PaymentPulsePolicy, OraclePolicy
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.domain.enums import RecoveryAction
+from rally.simulator import generate_batch
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel, OraclePolicyModel
+from rally.models.baselines import RuleBasedPolicy, PaymentPulsePolicy, OraclePolicy
+from rally.models.action_ranker import ActionRanker
+from rally.domain.enums import RecoveryAction
 
 def compute_oracle_labels(df):
     COST_MAP = {
@@ -74,7 +74,7 @@ def main():
     # Evaluate on test
     oracle_test_labels, test_enrvs = compute_oracle_labels(df_test)
     
-    pp_actions, _ = paymentpulse.select_actions_batch(df_test)
+    pp_actions, _ = rally.select_actions_batch(df_test)
     oracle_actions, _ = oracle_policy.select_actions_batch(df_test)
     rb_actions, _ = rule_based.select_actions_batch(df_test)
     

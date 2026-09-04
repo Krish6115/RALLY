@@ -15,12 +15,12 @@ import pandas as pd
 import logging
 from collections import Counter
 
-from paymentpulse.simulator import generate_batch
-from paymentpulse.domain.enums import RecoveryAction
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import SLearnerUpliftModel
-from paymentpulse.models.action_ranker import ActionRanker
-from paymentpulse.models.baselines import PaymentPulsePolicy, RuleBasedPolicy
+from rally.simulator import generate_batch
+from rally.domain.enums import RecoveryAction
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import SLearnerUpliftModel
+from rally.models.action_ranker import ActionRanker
+from rally.models.baselines import PaymentPulsePolicy, RuleBasedPolicy
 
 from sklearn.ensemble import HistGradientBoostingClassifier
 

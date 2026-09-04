@@ -1,9 +1,9 @@
 import pytest
 import pandas as pd
 
-from paymentpulse.features.context_builder import ContextBuilder
-from paymentpulse.models.uplift_model import TLearnerUpliftModel
-from paymentpulse.simulator.generator import SyntheticDataGenerator
+from rally.features.context_builder import ContextBuilder
+from rally.models.uplift_model import TLearnerUpliftModel
+from rally.simulator.generator import SyntheticDataGenerator
 
 def test_latent_leakage_prevented():
     """
@@ -33,9 +33,9 @@ def test_economic_unit_conversion():
     """
     Proves economic scaling never multiplies INR by INR, or treats probability as INR.
     """
-    from paymentpulse.domain.decisions import ModelPrediction
-    from paymentpulse.domain.enums import RecoveryAction
-    from paymentpulse.policy.engine import DecisionPipeline
+    from rally.domain.decisions import ModelPrediction
+    from rally.domain.enums import RecoveryAction
+    from rally.policy.engine import DecisionPipeline
     
     # Probability (0.1) * GMV (1000) = Expected Value INR (100)
     # Expected Value INR (100) - Cost INR (2.5) = ENRV (97.5)
@@ -50,7 +50,7 @@ def test_economic_unit_conversion():
         uplift = p.action_uplifts[RecoveryAction.SEND_PAYMENT_LINK]
         gmv = amount * uplift
         cost = 2.50
-        from paymentpulse.domain.decisions import EconomicValue
+        from rally.domain.decisions import EconomicValue
         return [EconomicValue(
             action=RecoveryAction.SEND_PAYMENT_LINK,
             expected_recovered_gmv=gmv,
@@ -61,8 +61,8 @@ def test_economic_unit_conversion():
         
     pipeline = DecisionPipeline(ml_predictor=lambda x, y: pred, economic_scorer=mock_economic_scorer)
     
-    from paymentpulse.policy.constraints import PolicyConstraints
-    from paymentpulse.domain.entities import MerchantPolicy
+    from rally.policy.constraints import PolicyConstraints
+    from rally.domain.entities import MerchantPolicy
     
     decision = pipeline.decide(
         event_id="e1", payment_id="p1", feature_snapshot_id="s1", model_version="v1",

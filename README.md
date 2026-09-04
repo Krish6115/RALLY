@@ -5,7 +5,7 @@
 > Rally estimates the incremental economic value of recovery actions after a failed one-time checkout payment, while deterministic policy and safety controls retain final authority over execution.
 
 > **Product:** Rally  
-> **Internal Python Package:** `paymentpulse` (preserved namespace for stability)
+> **Internal Python Package:** `rally`
 
 <p>
   <img src="https://img.shields.io/badge/Razorpay_AI_Buildathon-2026-072654?style=flat-square" alt="Buildathon 2026" />
@@ -354,7 +354,7 @@ Rally treats model promotion as an **evidence-based decision**, not an assumptio
 
 ```
 Rally/
-├── src/paymentpulse/         # Core Python package namespace
+├── src/rally/         # Core Python package namespace
 │   ├── api/                  # FastAPI server, routes, webhook handler
 │   ├── config/               # Settings and environment configuration
 │   ├── domain/               # Entities, enums, decision types
@@ -413,7 +413,7 @@ This starts both servers:
 **Manual start (any OS):**
 ```bash
 # Terminal 1 — Backend
-python src/paymentpulse/api/server.py
+python src/rally/api/server.py
 
 # Terminal 2 — Frontend
 cd frontend

@@ -10,7 +10,7 @@ Verifies:
 
 import numpy as np
 import pytest
-from paymentpulse.evaluation.off_policy import compute_doubly_robust_scores
+from rally.evaluation.off_policy import compute_doubly_robust_scores
 
 
 def test_hand_checkable_doubly_robust_calculation():

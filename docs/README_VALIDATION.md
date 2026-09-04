@@ -8,7 +8,7 @@ Generated: 2026-09-04
 |---|---|---|
 | `pip install -e ".[dev]"` | Yes | `pyproject.toml` confirms `[project.optional-dependencies] dev` |
 | `scripts\start_app.cmd` | Yes | Launches backend (port 8000) + frontend (port 5173) |
-| `python src/paymentpulse/api/server.py` | Yes | `uvicorn.run(app, host="0.0.0.0", port=8000)` at line 261 |
+| `python src/rally/api/server.py` | Yes | `uvicorn.run(app, host="0.0.0.0", port=8000)` at line 261 |
 | `npm run dev` | Yes | Vite dev server on port 5173 |
 | `python -m pytest tests/ -v` | Yes | 27 passed, 1 xfail, 31.17s |
 | `python scripts/run_all_checks.py` | Yes | Script exists at `scripts/run_all_checks.py` |
@@ -42,17 +42,17 @@ Source: `results/evaluation_summary.csv` columns `mean_enrv_inr`, `dr_ci95_low_i
 
 | Path | Exists | Type |
 |---|---|---|
-| `src/paymentpulse/api/` | Yes | Directory (server.py, routes.py, webhooks.py) |
-| `src/paymentpulse/config/` | Yes | Directory (settings.py) |
-| `src/paymentpulse/domain/` | Yes | Directory (entities.py, enums.py, decisions.py) |
-| `src/paymentpulse/evaluation/` | Yes | Directory (off_policy.py, runner.py, metrics.py, sanity_checks.py) |
-| `src/paymentpulse/execution/` | Yes | Directory (action_executor.py, adapter.py, razorpay_client.py, reconciliation.py) |
-| `src/paymentpulse/features/` | Yes | Directory (context_builder.py, snapshot.py) |
-| `src/paymentpulse/models/` | Yes | Directory (uplift_model.py, action_ranker.py, baselines.py) |
-| `src/paymentpulse/observability/` | Yes | Directory (metrics.py) |
-| `src/paymentpulse/policy/` | Yes | Directory (engine.py, constraints.py) |
-| `src/paymentpulse/safety/` | Yes | Directory (state_machine.py, recovery_coordinator.py, idempotency.py) |
-| `src/paymentpulse/simulator/` | Yes | Directory (generator.py, error_taxonomy.py, downtime.py, models.py) |
+| `src/rally/api/` | Yes | Directory (server.py, routes.py, webhooks.py) |
+| `src/rally/config/` | Yes | Directory (settings.py) |
+| `src/rally/domain/` | Yes | Directory (entities.py, enums.py, decisions.py) |
+| `src/rally/evaluation/` | Yes | Directory (off_policy.py, runner.py, metrics.py, sanity_checks.py) |
+| `src/rally/execution/` | Yes | Directory (action_executor.py, adapter.py, razorpay_client.py, reconciliation.py) |
+| `src/rally/features/` | Yes | Directory (context_builder.py, snapshot.py) |
+| `src/rally/models/` | Yes | Directory (uplift_model.py, action_ranker.py, baselines.py) |
+| `src/rally/observability/` | Yes | Directory (metrics.py) |
+| `src/rally/policy/` | Yes | Directory (engine.py, constraints.py) |
+| `src/rally/safety/` | Yes | Directory (state_machine.py, recovery_coordinator.py, idempotency.py) |
+| `src/rally/simulator/` | Yes | Directory (generator.py, error_taxonomy.py, downtime.py, models.py) |
 | `frontend/` | Yes | React + Vite application |
 | `tests/` | Yes | 10 test files |
 | `scripts/` | Yes | 10 scripts including start_app.cmd |

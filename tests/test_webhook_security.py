@@ -5,9 +5,9 @@ import json
 import time
 from datetime import datetime, timezone
 
-from paymentpulse.api.webhooks import WebhookReceiver
-from paymentpulse.safety.idempotency import IdempotencyStore
-from paymentpulse.domain.enums import WebhookEventType
+from rally.api.webhooks import WebhookReceiver
+from rally.safety.idempotency import IdempotencyStore
+from rally.domain.enums import WebhookEventType
 
 def test_webhook_security_signature():
     secret = "test_secret_123"

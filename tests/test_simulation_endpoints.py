@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from src.paymentpulse.api.server import app
+from src.rally.api.server import app
 import pytest
 
 client = TestClient(app)
