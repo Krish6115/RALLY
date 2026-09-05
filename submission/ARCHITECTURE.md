@@ -1,5 +1,9 @@
 # Rally System Architecture
 
+<div align="center">
+  <img src="../docs/assets/rally_architecture.png" alt="Rally System Architecture" width="100%" />
+</div>
+
 The Rally system strictly decouples analytical machine learning from determinisitic side-effect execution.
 
 ## High-Level Flow

@@ -198,21 +198,14 @@ flowchart LR
 
 ## Architecture
 
-### Deployable Path (Production)
+<div align="center">
+  <a href="docs/assets/rally_architecture.png">
+    <img src="docs/assets/rally_architecture.png" alt="Rally System Architecture" width="100%" style="border-radius: 8px; border: 1px solid #e2e8f0;"/>
+  </a>
+  <p align="center"><em>Full 5-Stage Orchestration Pipeline: Ingestion &rarr; ML Decision Engine &rarr; Deterministic Safety Harness &rarr; Execution &rarr; Audit</em></p>
+</div>
 
-```mermaid
-flowchart LR
-    WH["Webhook"] --> CB["Context Builder"] --> TL["T-Learner (CATE)"] --> AR["Action Ranker"] --> PG["Policy Gate"] --> SC["Live Safety Check"] --> EA["Execution Adapter"]
-```
-
-Every component in this path uses **only pre-decision observable information**. No simulator variables, no oracle labels, no latent ground truth.
-
-### Evaluation Path (Simulation Only)
-
-```mermaid
-flowchart LR
-    SG["Synthetic Generator"] --> DP["[Deployable Pipeline]"] --> OD["Oracle Diagnostics"] --> OPE["Doubly Robust Eval"]
-```
+Every component in the decisioning path uses **only pre-decision observable information**. No simulator variables, no oracle labels, no latent ground truth.
 
 > **The Oracle is simulator-only and is not part of deployable decisioning.** It exists to score the deployable pipeline against latent ground truth that would not be available in production.
 
