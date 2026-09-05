@@ -18,13 +18,16 @@
 
 > **Simulation-first implementation.** All evaluation results are based on a synthetic simulation environment. No production revenue lift is claimed. The deployable model is evaluated against an incumbent rule-based policy and is **not promoted** when it underperforms.
 
-<!-- SCREENSHOT PLACEHOLDER — Replace with final Rally dashboard screenshot -->
-<!-- ![Rally Dashboard](screenshot_placeholder.png) -->
+<div align="center">
+  <img src="docs/assets/rally_overview_dashboard.png" alt="Rally Control Center Dashboard" width="100%" style="border-radius: 8px; box-shadow: 0 4px 20px rgba(0,0,0,0.25);" />
+  <p align="center"><em>Rally Recovery Control Center: Real-time payment failure recovery monitoring, causal economic ranking, and deterministic safety execution.</em></p>
+</div>
 
 ---
 
 ## Table of Contents
 
+- [Visual Tour & Interactive Demo](#visual-tour--interactive-demo)
 - [Why This Problem](#why-this-problem)
 - [What We Built](#what-we-built)
 - [Design Principle](#design-principle)
@@ -44,6 +47,50 @@
 - [Limitations](#limitations)
 - [Future Work](#future-work)
 - [Why This Belongs in Razorpay](#why-this-belongs-in-razorpay)
+
+---
+
+## Visual Tour & Interactive Demo
+
+Rally includes a production-grade merchant operations dashboard designed to mirror the design language, typography, and UX patterns of Razorpay's merchant ecosystem.
+
+### Interactive Live Walkthrough
+
+<div align="center">
+  <img src="docs/assets/rally_dashboard_demo.webp" alt="Rally Interactive Walkthrough Demo" width="100%" style="border-radius: 8px; border: 1px solid #1e293b;" />
+  <p align="center"><em>Screen Recording: Simulating payment failures, dynamic uplift ranking, and state machine transitions in real time.</em></p>
+</div>
+
+---
+
+### Core Interfaces
+
+<table>
+  <tr>
+    <td width="50%" valign="top">
+      <h4 align="center">1. Decision Explorer & Pre-Decision Context</h4>
+      <a href="docs/assets/rally_decision_explorer.png"><img src="docs/assets/rally_decision_explorer.png" alt="Decision Explorer" width="100%"/></a>
+      <p align="center"><em>Pre-decision feature snapshot (observables only), 5-stage pipeline tracking, and granular ENRV unit breakdown per candidate action.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h4 align="center">2. Payment Lifecycle State Machine</h4>
+      <a href="docs/assets/rally_payment_lifecycle.png"><img src="docs/assets/rally_payment_lifecycle.png" alt="Payment Lifecycle State Machine" width="100%"/></a>
+      <p align="center"><em>Deterministic transition guarantees preventing race conditions: <code>IDLE &rarr; FAILED &rarr; RECOVERY_PENDING &rarr; RECOVERY_EXECUTING &rarr; RECOVERED / UNKNOWN / EXHAUSTED</code>.</em></p>
+    </td>
+  </tr>
+  <tr>
+    <td width="50%" valign="top">
+      <h4 align="center">3. Safety Controls & Failure Matrix</h4>
+      <a href="docs/assets/rally_safety_controls.png"><img src="docs/assets/rally_safety_controls.png" alt="Safety Controls" width="100%"/></a>
+      <p align="center"><em>Real-time safety veto tracking, idempotency lock enforcement, API timeout handling, and late-capture suppression.</em></p>
+    </td>
+    <td width="50%" valign="top">
+      <h4 align="center">4. Out-of-Sample Causal Evaluation</h4>
+      <a href="docs/assets/rally_causal_evaluation.png"><img src="docs/assets/rally_causal_evaluation.png" alt="Out-of-Sample Evaluation" width="100%"/></a>
+      <p align="center"><em>Scientific rigor: Doubly Robust (DR) estimation on held-out test data showing explicit non-promotion when model does not establish superiority.</em></p>
+    </td>
+  </tr>
+</table>
 
 ---
 
@@ -127,29 +174,41 @@ Every model recommendation passes through a deterministic policy gate and a live
 ### Decision Lifecycle
 
 ```mermaid
-flowchart TD
-    A["Payment Failure Webhook"] --> B["Feature Snapshot"]
-    B --> C["Candidate Action Generation"]
-    C --> D["T-Learner Uplift Model"]
-    D --> E["Economic Scoring (ENRV)"]
-    E --> F["Deterministic Policy Gate"]
-    F --> G["Live-State Safety Check"]
-    G --> H["Razorpay Execution Adapter"]
-    H --> I["Outcome Reconciliation"]
-    I --> J["Audit Log"]
-    J --> K["Causal Off-Policy Evaluation"]
+flowchart LR
+    subgraph S1 ["1. INGESTION"]
+        direction LR
+        A["⚡ Failure Webhook"] --> B["📋 Feature Snapshot"]
+    end
+    subgraph S2 ["2. CAUSAL AI"]
+        direction LR
+        C["🎯 Candidate Actions"] --> D["🧠 T-Learner Uplift"] --> E["💰 Economic ENRV"]
+    end
+    subgraph S3 ["3. SAFETY GATES"]
+        direction LR
+        F["🛡️ Deterministic Policy"] --> G["🔒 Live Safety Verification"]
+    end
+    subgraph S4 ["4. EXECUTION & AUDIT"]
+        direction LR
+        H["🚀 Razorpay Adapter"] --> I["🔄 Reconciliation"] --> J["📊 Off-Policy Eval"]
+    end
+
+    B --> C
+    E --> F
+    G --> H
 ```
 
 ### Recovery State Machine
 
-```
-FAILED
-  → RECOVERY_PENDING       (decision made, awaiting execution)
-  → RECOVERY_EXECUTING     (side effect dispatched)
-  → UNKNOWN                (API timeout — outcome not yet known)
-  → RECOVERED              (payment succeeded)
-  → EXHAUSTED              (retry budget consumed, no recovery)
-  → TERMINATED             (payment captured/refunded during recovery)
+```mermaid
+flowchart LR
+    FAILED(["FAILED"]) --> PENDING["RECOVERY_PENDING"]
+    PENDING --> EXECUTING["RECOVERY_EXECUTING"]
+    EXECUTING --> RECOVERED(["✅ RECOVERED"])
+    EXECUTING --> UNKNOWN(["⚠️ UNKNOWN<br/>(API Timeout)"])
+    EXECUTING --> EXHAUSTED(["🛑 EXHAUSTED"])
+    EXECUTING --> TERMINATED(["⛔ TERMINATED<br/>(Late Capture)"])
+    UNKNOWN -.->|"Reconcile"| RECOVERED
+    UNKNOWN -.->|"Reconcile"| EXHAUSTED
 ```
 
 **Why `UNKNOWN` exists:** An API timeout does not mean failure. It means *we do not know the outcome*. The system transitions to `UNKNOWN`, suppresses further retry, and waits for reconciliation before determining the next action.
@@ -160,16 +219,18 @@ FAILED
 
 ### Deployable Path (Production)
 
-```
-Webhook → Context Builder → T-Learner → Action Ranker → Policy Gate → Safety Check → Execution Adapter
+```mermaid
+flowchart LR
+    WH["Webhook"] --> CB["Context Builder"] --> TL["T-Learner (CATE)"] --> AR["Action Ranker"] --> PG["Policy Gate"] --> SC["Live Safety Check"] --> EA["Execution Adapter"]
 ```
 
 Every component in this path uses **only pre-decision observable information**. No simulator variables, no oracle labels, no latent ground truth.
 
 ### Evaluation Path (Simulation Only)
 
-```
-Synthetic Generator → [Deployable Path] → Oracle Diagnostics → Off-Policy Evaluation
+```mermaid
+flowchart LR
+    SG["Synthetic Generator"] --> DP["[Deployable Pipeline]"] --> OD["Oracle Diagnostics"] --> OPE["Doubly Robust Eval"]
 ```
 
 > **The Oracle is simulator-only and is not part of deployable decisioning.** It exists to score the deployable pipeline against latent ground truth that would not be available in production.
