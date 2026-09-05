@@ -175,26 +175,7 @@ Every model recommendation passes through a deterministic policy gate and a live
 
 ```mermaid
 flowchart LR
-    subgraph S1 ["1. INGESTION"]
-        direction LR
-        A["⚡ Failure Webhook"] --> B["📋 Feature Snapshot"]
-    end
-    subgraph S2 ["2. CAUSAL AI"]
-        direction LR
-        C["🎯 Candidate Actions"] --> D["🧠 T-Learner Uplift"] --> E["💰 Economic ENRV"]
-    end
-    subgraph S3 ["3. SAFETY GATES"]
-        direction LR
-        F["🛡️ Deterministic Policy"] --> G["🔒 Live Safety Verification"]
-    end
-    subgraph S4 ["4. EXECUTION & AUDIT"]
-        direction LR
-        H["🚀 Razorpay Adapter"] --> I["🔄 Reconciliation"] --> J["📊 Off-Policy Eval"]
-    end
-
-    B --> C
-    E --> F
-    G --> H
+    A["Failure Webhook"] --> B["Feature Snapshot"] --> C["Candidate Actions"] --> D["T-Learner Uplift"] --> E["Economic Value (ENRV)"] --> F["Deterministic Policy"] --> G["Live Safety Check"] --> H["Razorpay Adapter"] --> I["Reconciliation"] --> J["Off-Policy Eval"]
 ```
 
 ### Recovery State Machine
@@ -203,10 +184,10 @@ flowchart LR
 flowchart LR
     FAILED(["FAILED"]) --> PENDING["RECOVERY_PENDING"]
     PENDING --> EXECUTING["RECOVERY_EXECUTING"]
-    EXECUTING --> RECOVERED(["✅ RECOVERED"])
-    EXECUTING --> UNKNOWN(["⚠️ UNKNOWN<br/>(API Timeout)"])
-    EXECUTING --> EXHAUSTED(["🛑 EXHAUSTED"])
-    EXECUTING --> TERMINATED(["⛔ TERMINATED<br/>(Late Capture)"])
+    EXECUTING --> RECOVERED(["RECOVERED"])
+    EXECUTING --> UNKNOWN(["UNKNOWN<br/>(API Timeout)"])
+    EXECUTING --> EXHAUSTED(["EXHAUSTED"])
+    EXECUTING --> TERMINATED(["TERMINATED<br/>(Late Capture)"])
     UNKNOWN -.->|"Reconcile"| RECOVERED
     UNKNOWN -.->|"Reconcile"| EXHAUSTED
 ```
@@ -500,7 +481,7 @@ python scripts/run_all_checks.py
 
 A quick walkthrough for reviewers:
 
-1. **Open Overview** — See the four KPI cards: Failed Payments, Estimated ENRV, Safety Vetoes, Unknown Outcomes. Click the ℹ️ icon on any card for an explanation.
+1. **Open Overview** — See the four KPI cards: Failed Payments, Estimated ENRV, Safety Vetoes, Unknown Outcomes. Click the info icon on any card for an explanation.
 2. **Click "Generate Failure"** — Triggers a synthetic payment failure through the full pipeline: feature snapshot → model prediction → economic scoring → policy gate → safety check → mock execution → reconciliation.
 3. **Open Live Decision Feed** — See the timestamped stream of recovery decisions with action, ENRV, confidence, and outcome.
 4. **Click "Trigger Timeout"** — Observe how the system transitions to `UNKNOWN` state and suppresses retry until reconciliation.
